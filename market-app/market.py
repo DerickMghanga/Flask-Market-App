@@ -1,6 +1,11 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+db = SQLAlchemy(app)  # create app DB instance
+
+class Item(db.Model):
+    name = db.Column(db.String(length=30))
 
 @app.route("/")
 @app.route('/home')
@@ -15,8 +20,6 @@ def market_page():
         {'id': 3, 'name': 'Keyboard', 'barcode': '231985128446', 'price': 150}
     ]
     return render_template('market.html', items=items)
-
-
 
 
 @app.route('/about/<username>')
